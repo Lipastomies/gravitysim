@@ -60,6 +60,7 @@ Seuraavaksi:
 	-ohjelman lopetus //tehty
 	-simulaation pysäytys, jatkaminen //pause tehty, tulee P:tä painamalla
 	-hiirellä objektien lisääminen, poisto (esim siten, että jos hiiren kursori alle x yksikköä etäisyydellä planetoidista, niin sen pystyy tuhoamaan)
+	//hiiren paikka luetaan nyt, eli implementointi mahdollista
 	-hiirellä planetoidin nopeuden/paikan vaihtaminen vaihtaminen
 	-simulaation resettaaminen, niin että simulaatio poistaa kaikki planetoidit.
 	-

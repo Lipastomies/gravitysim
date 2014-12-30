@@ -64,10 +64,14 @@ int main (void){
 		addObj( list,temp);
 	}
 	
-	//loopin toimimiselle olennaisia muuttujia
+	//loopin toimimiselle olennaisia muuttujia, nämä voisi sinänsä 
+	//laittaa omaan structiinsa tai johonkin, etteivät ne
+	//ole näin sotkuisesti. Tällöin niiden lataaminen tiedostosta
+	//saattaisi olla helpompaa.
 	int gameover = 0;
 	int redraw = 0;
 	int pause = 0;
+	double scale = 1;
 	
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_start_timer(timer);
@@ -97,6 +101,12 @@ int main (void){
 				else
 					pause = 1;
 			}
+			else if (ev.keyboard.keycode == ALLEGRO_KEY_UP){
+        		scale = scale*0.5;
+        	}
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN){
+        		scale = scale*2;
+        	}
 		}
 		else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES ||
               ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) {
@@ -108,7 +118,7 @@ int main (void){
 				printVect(mouse);
 			redraw = 0;
 			al_clear_to_color(al_map_rgb(0,0,0));
-			drawObjList(list, 0.2);
+			drawObjList(list, scale);
 			al_flip_display();
 		}
 	}
