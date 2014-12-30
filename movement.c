@@ -13,17 +13,29 @@ void accelerateObj(Obj * object){//tällä päivitetään nopeus
 	//destroyVect(newvel);
 	//setObjVal(object,getVectVal(getObjAttr(A,'a'),0),getVectVal(getObjAttr(A,'a'),0),'v');
 }
-double absForce(Obj * A, Obj * B){ //palauttaa voiman skalaari-
-	//arvon, ei siis laske vektoria.
+double absForceSquare(Obj * A, Obj * B){ //palauttaa voiman skalaari-
+								   //arvon, ei siis laske vektoria.
 	double dist = calcDist(getObjAttr(A, 'p'), getObjAttr(B, 'p'));
 	//printf("%lf\n", dist);
 	if (dist != 0)
 		return (getObjMass(A)*getObjMass(B))/(dist*dist);
 	return 0;
 }
+
+//muita voimia, joita voi valita : 1/r
+
+double absForceLinear(Obj * A, Obj * B){ //palauttaa voiman skalaari-
+								   //arvon, ei siis laske vektoria.
+	double dist = calcDist(getObjAttr(A, 'p'), getObjAttr(B, 'p'));
+	//printf("%lf\n", dist);
+	if (dist != 0)
+		return (getObjMass(A)*getObjMass(B))/(dist);
+	return 0;
+}
+
 Vect * calcAcc(Obj * A, Obj * B){//A on vaikutettava objekti, B on vaikuttava
 	Vect * Temp = createVect();
-	double absforce = absForce(A, B);
+	double absforce = absForceSquare(A, B);
 	double deltax = getVectVal(getObjAttr(B,'p'),0)-getVectVal(getObjAttr(A,'p'),0);
 	double deltay = getVectVal(getObjAttr(B,'p'),1)-getVectVal(getObjAttr(A,'p'),1);
 	double xforce = (deltax)/(calcDist(getObjAttr(B,'p'), getObjAttr(A,'p')))*absforce/getObjMass(A);
