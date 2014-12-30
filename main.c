@@ -50,6 +50,8 @@ int main (void){
 	
 	//hiiren koordinaatit
 	Vect * mouse = createVect();
+	Vect * pan = createVect();
+	setVect( pan, 320,240);
 	
 	double FPS = 60;
 	timer = al_create_timer(1/FPS);
@@ -62,7 +64,7 @@ int main (void){
 	//itse simuloitavat kappaleet ja niiden luonti
 	
 	ObjList * list = createObjList();
-	for (int i = 0;i<40;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
+	for (int i = 0;i<5;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
 		Obj * temp = createObj((double)rand_lim(5000));
 		Vect * temp1 = randVect(2000,1500);
 		Vect * temp2 = randVect(100,100);
@@ -112,12 +114,25 @@ int main (void){
 				else
 					pause = 1;
 			}
-			else if (ev.keyboard.keycode == ALLEGRO_KEY_UP){
+			else if (ev.keyboard.keycode == ALLEGRO_KEY_O){
         		scale = scale*0.5;
         	}
-        	else if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN){
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_I){
         		scale = scale*2;
         	}
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT){
+        		setVect(pan, getVectVal(pan,0)+50, getVectVal(pan,1)) ;
+        	}
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT){
+        		setVect(pan, getVectVal(pan,0)-50, getVectVal(pan,1)) ;
+        	}
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_UP){
+        		setVect(pan, getVectVal(pan,0), getVectVal(pan,1)+50) ;
+        	}
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN){
+        		setVect(pan, getVectVal(pan,0), getVectVal(pan,1)-50) ;
+        	}
+        	
 		}
 		else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES ||
               ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) {
@@ -129,7 +144,7 @@ int main (void){
 				printVect(mouse);
 			redraw = 0;
 			al_clear_to_color(al_map_rgb(0,0,0));
-			drawObjList(list, scale);
+			drawObjList(list, scale, pan);
 			al_flip_display();
 		}
 	}
@@ -139,5 +154,6 @@ int main (void){
 	al_destroy_event_queue(event_queue);
 	destroyObjList(list);
 	destroyVect(mouse);
+	destroyVect(pan);
 	return 0;
 }
