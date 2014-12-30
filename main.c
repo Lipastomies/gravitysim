@@ -42,6 +42,9 @@ int main (void){
 	ALLEGRO_EVENT_QUEUE * event_queue = NULL;
 	ALLEGRO_TIMER * timer = NULL;
 	
+	//hiiren koordinaatit
+	Vect * mouse = createVect();
+	
 	double FPS = 60;
 	timer = al_create_timer(1/FPS);
 	event_queue = al_create_event_queue();
@@ -49,6 +52,7 @@ int main (void){
 	al_register_event_source(event_queue, al_get_display_event_source(display)); //display tungetaan event_queueen
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));//ajastin tungetaan event_queueen
 	al_register_event_source(event_queue, al_get_keyboard_event_source());//näpiskä tungetaan event_queueen
+	al_register_event_source(event_queue, al_get_mouse_event_source());
 	//itse simuloitavat kappaleet ja niiden luonti
 	
 	ObjList * list = createObjList();
@@ -94,8 +98,14 @@ int main (void){
 					pause = 1;
 			}
 		}
+		else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES ||
+              ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) {
+         setVect( mouse,(double)ev.mouse.x,(double)ev.mouse.y);
+      }
 		
 		if (redraw && al_is_event_queue_empty(event_queue)){
+			if (al_get_timer_count(timer) % 60 == 0)
+				printVect(mouse);
 			redraw = 0;
 			al_clear_to_color(al_map_rgb(0,0,0));
 			drawObjList(list, 0.2);
@@ -107,5 +117,6 @@ int main (void){
 	al_destroy_timer(timer);
 	al_destroy_event_queue(event_queue);
 	destroyObjList(list);
+	destroyVect(mouse);
 	return 0;
 }
