@@ -63,7 +63,7 @@ Seuraavaksi:
 	//hiiren paikka luetaan nyt, eli implementointi mahdollista
 	-hiirellä planetoidin nopeuden/paikan vaihtaminen vaihtaminen
 	-simulaation resettaaminen, niin että simulaatio poistaa kaikki planetoidit.
-	-
+	-simulaation skaalaaminen ja "panning" //tehty
 4. liian kaukana olevien planetoidien automaattinen tuhoaminen (esim. 100000-1000000 yksikköä)
 
 
@@ -75,7 +75,7 @@ saa poistettua objektilistasta
 -simulaation pysäyttäminen/jatkaminen/alustaminen 
 -nopeusvektorien piirtäminen ja valinta siihen
 -simulaation nopeuden muuttaminen (hitaammaksi vähän vaikeampi, mutta frameskipillä onnistuu nopeammaksi)
--piirrettävän alueen skaalaus //
+-piirrettävän alueen skaalaus //tehty
 -autoskaalaus?
 -kaikille kappaleille hännät, jotka näyttävät missä ne ovat olleet (voi olla hieman vaikeaa, olisiko vect-taulukko, joka sisältää aina viimeisimmät 20-300 sijaintia)
 -simulaation tallentaminen datatiedostoihin, jotta voi tallentaa hyvin toimivat

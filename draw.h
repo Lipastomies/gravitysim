@@ -7,6 +7,9 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 
+double scaleVal(double val, double scale);
+double panVal(double val, double pan);
+
 void drawObj(Obj * object , double scale , Vect * pan); //piirretään objekti, tätä
 										   // ei koskaan kutsuta itse
 

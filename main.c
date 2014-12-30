@@ -64,7 +64,7 @@ int main (void){
 	//itse simuloitavat kappaleet ja niiden luonti
 	
 	ObjList * list = createObjList();
-	for (int i = 0;i<5;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
+	for (int i = 0;i<45;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
 		Obj * temp = createObj((double)rand_lim(5000));
 		Vect * temp1 = randVect(2000,1500);
 		Vect * temp2 = randVect(100,100);
@@ -84,6 +84,7 @@ int main (void){
 	int redraw = 0;
 	int pause = 1;
 	int forcetoggle = 1;
+	int timescale = 1;
 	double scale = 0.25;
 	
 	al_clear_to_color(al_map_rgb(0,0,0));
@@ -97,9 +98,11 @@ int main (void){
 			redraw = 1;
 			//simulointi tänne
 			if (!pause){
-				updatePos(list);
-				updateAcc(list,forcetoggle);
-				updateVel(list);
+				for (int i=0;i<timescale;i++){
+					updatePos(list);
+					updateAcc(list,forcetoggle);
+					updateVel(list);
+				}
 			}
 		}
 					  
@@ -115,10 +118,17 @@ int main (void){
 					pause = 1;
 			}
 			else if (ev.keyboard.keycode == ALLEGRO_KEY_O){
-        		scale = scale*0.5;
+        		scale = scale*sqrt(0.5);
         	}
         	else if (ev.keyboard.keycode == ALLEGRO_KEY_I){
-        		scale = scale*2;
+        		scale = scale*sqrt(2);
+        	}
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_K){
+        		timescale++;
+        	}
+        	else if (ev.keyboard.keycode == ALLEGRO_KEY_J){
+        		if (timescale > 1)
+					timescale--;
         	}
         	else if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT){
         		setVect(pan, getVectVal(pan,0)+50, getVectVal(pan,1)) ;
