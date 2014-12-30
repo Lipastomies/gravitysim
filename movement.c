@@ -33,9 +33,12 @@ double absForceLinear(Obj * A, Obj * B){ //palauttaa voiman skalaari-
 	return 0;
 }
 
-Vect * calcAcc(Obj * A, Obj * B){//A on vaikutettava objekti, B on vaikuttava
+Vect * calcAcc(Obj * A, Obj * B,int forcetoggle){//A on vaikutettava objekti, B on vaikuttava
 	Vect * Temp = createVect();
-	double absforce = absForceSquare(A, B);
+	double absforce = 0;
+	if (forcetoggle == 1)
+		absforce = absForceLinear(A, B);
+	else absforce = absForceSquare(A,B);
 	double deltax = getVectVal(getObjAttr(B,'p'),0)-getVectVal(getObjAttr(A,'p'),0);
 	double deltay = getVectVal(getObjAttr(B,'p'),1)-getVectVal(getObjAttr(A,'p'),1);
 	double xforce = (deltax)/(calcDist(getObjAttr(B,'p'), getObjAttr(A,'p')))*absforce/getObjMass(A);

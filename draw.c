@@ -7,7 +7,7 @@ void drawObj(Obj * object , double scale){ //piirretään objekti, tätä ei kos
 	float y = (float) getVectVal(getObjAttr(object, 'p'), 1);
 	//scale += 100;
 	ALLEGRO_COLOR color = al_map_rgb(200,200,200);
-	al_draw_filled_circle(320.0+(float)scale*x,240.0+(float)scale*y,10,color);
+	al_draw_filled_circle(320.0+(float)scale*x,240.0+(float)scale*y,4,color);
 }
 void drawObjList(ObjList * list, double scale){//piirretaan lista, tätä kutsutaan itse.
 	for (size_t i=0;i<list->size;i++)

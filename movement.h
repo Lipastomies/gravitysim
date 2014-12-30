@@ -8,6 +8,6 @@ void moveObj(Obj * object);
 void accelerateObj(Obj * object);
 double absForceSquare(Obj * A, Obj * B);
 double absForceLinear(Obj * A, Obj * B);
-Vect * calcAcc(Obj * A, Obj * B); //käytetään siten, että tämä luo vect-tyypin, joka pitää itse vapauttaa.
+Vect * calcAcc(Obj * A, Obj * B, int forcetoggle); //käytetään siten, että tämä luo vect-tyypin, joka pitää itse vapauttaa.
 
 #endif

@@ -20,7 +20,13 @@ int rand_lim(int limit) {
 
 Vect * randVect(int lim1, int lim2){
 	Vect * retval = createVect();
-	setVect(retval, (double)rand_lim(lim1), (double)rand_lim(lim2));
+	int temp1=rand_lim(lim1);
+	int temp2=rand_lim(lim2);
+	if (rand_lim(1000) <= 500)
+		temp1 *= -1;
+	if (rand_lim(1000) <= 500)
+		temp2 *= -1;
+	setVect(retval, (double)temp1, (double)temp2);	
 	return retval;
 }
 
@@ -56,12 +62,16 @@ int main (void){
 	//itse simuloitavat kappaleet ja niiden luonti
 	
 	ObjList * list = createObjList();
-	for (int i = 0;i<30;i++){//HUOM:n. 200 kappaletta on maksimi
-		Obj * temp = createObj((double)rand_lim(500));
-		setObjAttr( temp, randVect(640,480), 'p');
-		setObjAttr(temp,randVect(100,100),'v');
-		multVect( getObjAttr( temp, 'v'),0.02);
+	for (int i = 0;i<40;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
+		Obj * temp = createObj((double)rand_lim(5000));
+		Vect * temp1 = randVect(2000,1500);
+		Vect * temp2 = randVect(100,100);
+		setObjAttr( temp, temp1, 'p');
+		setObjAttr(temp,temp2,'v');
+		multVect( getObjAttr( temp, 'v'),0.2);
 		addObj( list,temp);
+		destroyVect(temp1);
+		destroyVect(temp2);
 	}
 	
 	//loopin toimimiselle olennaisia muuttujia, nämä voisi sinänsä 
@@ -70,8 +80,9 @@ int main (void){
 	//saattaisi olla helpompaa.
 	int gameover = 0;
 	int redraw = 0;
-	int pause = 0;
-	double scale = 1;
+	int pause = 1;
+	int forcetoggle = 1;
+	double scale = 0.25;
 	
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_start_timer(timer);
@@ -85,12 +96,12 @@ int main (void){
 			//simulointi tänne
 			if (!pause){
 				updatePos(list);
-				updateAcc(list);
+				updateAcc(list,forcetoggle);
 				updateVel(list);
 			}
 		}
 					  
-		//tähän joku ehto
+		//input tässä
 		else if(ev.type == ALLEGRO_EVENT_KEY_DOWN) {
 			if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE){
         		gameover = 1;

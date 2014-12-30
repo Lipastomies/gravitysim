@@ -56,14 +56,14 @@ void destroyObjList(ObjList * objlist){
 	free(objlist); 
 }
 
-void updateAcc(ObjList * objlist){//päivittää kaikkien objektien kiihtyvyydet
+void updateAcc(ObjList * objlist, int forcetoggle){//päivittää kaikkien objektien kiihtyvyydet
 	for (size_t i=0;i<objlist->size;i++){//käy läpi kaikki objektit
 		//nollataan nykyinen kiihtyvyys
 		setVect(getObjAttr(objlist->obj[i],'a'),0,0);
 		Vect * sum = createVect();//summakiihtyvyys
 		for (size_t j=0;j<objlist->size;j++){
 			if (j!=i){
-				Vect * acc = calcAcc( objlist->obj[i],objlist->obj[j]);
+				Vect * acc = calcAcc( objlist->obj[i],objlist->obj[j],forcetoggle);
 				addVect(sum,acc);
 				destroyVect(acc);
 			}

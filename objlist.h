@@ -21,7 +21,7 @@ void removeObj(ObjList * objlist, size_t index);
 
 void destroyObjList(ObjList * objlist);
 
-void updateAcc(ObjList * objlist);//päivittää kaikkien objektien kiihtyvyydet
+void updateAcc(ObjList * objlist,int forcetoggle);//päivittää kaikkien objektien kiihtyvyydet
 
 void updateVel(ObjList * objlist);//päivittää objektien nopeudet
 
