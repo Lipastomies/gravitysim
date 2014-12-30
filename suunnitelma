@@ -1,0 +1,84 @@
+tee gravitaatiosimu, jossa 2(-n) objektia vuorovaikuttavat toistensa kanssa.
+
+Objekteille kuuluu ainakin:
+1.massa (alussa voi olettaa kaikille saman massan, tosin massan implementoimisen ei uskoisi olevan liian vaikeaa)
+2.paikka (ilmiselvästi, käytetään xy-koordinaatistoa)
+3.nopeus (komponentteinaan, ei käytetä mitään ihme "suuntaa ja suuruutta")
+
+vuorovaikuttava voima vissiin G*(m1*m2)/r^2, jossa G jokin vakio, m1, m2 massoja, r etäisyys.
+1. itse vuorovaikutussysteemi kuntoon.
+2. simulointi 2 objektille
+3. simulointi 3 objektille
+4. simulointi n objektille
+5. kun simulointi valmis, grafiikat kuntoon
+6. käyttöliittymä kuntoon
+7. valamis
+
+24.12 klo 02:40
+-tehty vektorityyppi, samoin itse objektityypi, joka sisältää 
+	-massan
+	-position
+	-nopeuden
+Pitäisikö lisätä tähän vielä vaikuttava voima vektorina?ehkä? kyyllä?
+Mahdollisesti? katotaan, josko sillä on mitään järkiperustetta.
+
+Tee funktio, joka päivittää paikan nopeuden perusteella. Tässä 1 matkayksikkö =
+1 aikayksikkö*1 nopeusyksikkö. Myöhemmin tähän voidaan keksiä sopiva hattuvakio. //tehty
+
+Pitääpä muuten tehdä laskutoimitukset Vect -tietotyypille. Muuten on toosi vaikeeta. //tehty
+
+
+//voiman laskeminen : jos vain 2 kappaletta: lasketaan voima, tämän jälkeen sijoitetaan se voiman osakomponentteihin, ja lasketaan eri x- ja y-voimat.
+Tämän jälkeen lasketaan kiihtyvyydet kaavalla F = ma -> a = F/m
+
+
+tehty liikuttamiseen, kiihdyttämiseen ja voimien laskemiseen vaadittavat funktiot, aika siis kokeilla 2-ulotteisessa tasossa.
+
+Funktiot toimii aika hyvin, pikkasen vaikeeta noille on kiertoratoja kekkasta
+mutta se vissiin johtuu siitä että se energia ei minnekkään katoa.
+
+Seuraavaksi pitäisi varmaankin kehittää jokin listarakenne, jonka avulla voi pitää objekteja hyvin hanskassa ja laskea näille ne vuorovaikutukset.
+
+
+Listarakenteen nimi voisi olla vaikkapa.... ObjList !!!!!! Kuinka havainnollistavaa ja innovatiivista!
+
+Listarakenne ja sille tarvittavat funktiot (luonti, kappaleiden lisäys, tuhoaminen, voimien laskenta, nopeuksien ja paikkojen päivitys) tehty.
+
+Seuraavaksi testiohjelma, joka testaa, vuotaako muistia minnekkään.//tehty, ei vuoda enää.
+
+Seuraavaksi funktiot, joiden avulla piirretään itse objektit. Aluksi koordinaatit voi mapata ihan suoraan 1:1, mutta myöhemmin on pakko saada zoomausta kehiin, myös panning on aika pakollista. Koordinaattien mappaus tulee periaatteessa vain kertomalla koordinaatit jollain skalaarilla, eli skalaarilla kertominen toteutettava vektoreille.
+
+skalaarilla vektorin kertominen toteutettu.
+
+funktiot, jotka toivottavasti piirtävät kaikki objektit tehty.
+
+Seuraavaksi:
+1. simulaation piirtäminen, ns. main -tiedosto, jossa ALUKSI
+	-itse simulaatio alustetaan aluksi
+2. skaalaus
+3. input-systeemi, jonka avulla voi esim valita planetoidin ja vaikuttaa siihen
+	-ohjelman lopetus //tehty
+	-simulaation pysäytys, jatkaminen //pause tehty, tulee P:tä painamalla
+	-hiirellä objektien lisääminen, poisto (esim siten, että jos hiiren kursori alle x yksikköä etäisyydellä planetoidista, niin sen pystyy tuhoamaan)
+	-hiirellä planetoidin nopeuden/paikan vaihtaminen vaihtaminen
+	-simulaation resettaaminen, niin että simulaatio poistaa kaikki planetoidit.
+	-
+4. liian kaukana olevien planetoidien automaattinen tuhoaminen (esim. 100000-1000000 yksikköä)
+
+
+
+Mahdollisia ja mielellään toteutettuja ominaisuuksia:
+-objektien lisääminen lennosta //
+-objektien poistaminen lennosta //funktio tälle tehty, että itse planetoidin 
+saa poistettua objektilistasta
+-simulaation pysäyttäminen/jatkaminen/alustaminen 
+-nopeusvektorien piirtäminen ja valinta siihen
+-simulaation nopeuden muuttaminen (hitaammaksi vähän vaikeampi, mutta frameskipillä onnistuu nopeammaksi)
+-piirrettävän alueen skaalaus //
+-autoskaalaus?
+-kaikille kappaleille hännät, jotka näyttävät missä ne ovat olleet (voi olla hieman vaikeaa, olisiko vect-taulukko, joka sisältää aina viimeisimmät 20-300 sijaintia)
+-simulaation tallentaminen datatiedostoihin, jotta voi tallentaa hyvin toimivat
+simulaatiot. Tällöin tosin simulaation lataus tapahtuisi luultavasti
+käynnistyksen yhteydessä jollain argumentilla käynnistysargumentilla.
+-simulaatio tallettaisi aloitushetkensä, jolloin sen voisi resetoida aloitushetkeensä.
+
