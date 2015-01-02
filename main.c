@@ -81,7 +81,7 @@ int main (void){
 	
 	ObjList * list = createObjList();
 	for (int i = 0;i<10;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
-		Obj * temp = createObj((double)rand_lim(50000));
+		Obj * temp = createObj((double)rand_lim(500));
 		Vect * temp1 = randVect(2000,1500);
 		Vect * temp2 = randVect(100,100);
 		setObjAttr( temp, temp1, 'p');

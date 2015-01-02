@@ -14,7 +14,11 @@ double panVal(double val, double pan){
 void drawObj(Obj * object , double scale, Vect* pan){ //piirret채채n objekti, t채t채 ei koskaan kutsuta itse
 	float x = (float) getVectVal(getObjAttr(object, 'p'), 0);
 	float y = (float) getVectVal(getObjAttr(object, 'p'), 1);
-	ALLEGRO_COLOR color = al_map_rgb(200,200,200);
+	Vect * nil = createVect();
+	double vel = 6*calcDist(nil,getObjAttr(object,'v'));
+	if (vel > 255)
+		vel = 255;
+	ALLEGRO_COLOR color = al_map_rgb( 255,255-vel,255-vel);
 	//float delta_x = 320;
 	//float delta_y = 240;
 	//if (pan != NULL){
@@ -39,6 +43,7 @@ void drawObj(Obj * object , double scale, Vect* pan){ //piirret채채n objekti, t�
 	
 	
 	//}
+	destroyVect(nil);
 	al_draw_filled_circle(x+320,y+240,4,color);
 }
 void drawObjList(ObjList * list, double scale, Vect * pan){//piirretaan lista, t채t채 kutsutaan itse.
