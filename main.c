@@ -64,13 +64,13 @@ int main (void){
 	//itse simuloitavat kappaleet ja niiden luonti
 	
 	ObjList * list = createObjList();
-	for (int i = 0;i<150;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
-		Obj * temp = createObj((double)rand_lim(5000));
+	for (int i = 0;i<40;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
+		Obj * temp = createObj((double)rand_lim(500));
 		Vect * temp1 = randVect(2000,1500);
 		Vect * temp2 = randVect(100,100);
 		setObjAttr( temp, temp1, 'p');
 		setObjAttr(temp,temp2,'v');
-		multVect( getObjAttr( temp, 'v'),0.2);
+		multVect( getObjAttr( temp, 'v'),0.0005);
 		addObj( list,temp);
 		destroyVect(temp1);
 		destroyVect(temp2);
@@ -83,7 +83,7 @@ int main (void){
 	int gameover = 0;
 	int redraw = 0;
 	int pause = 1;
-	int forcetoggle = 0;
+	int forcetoggle = 1; //1 =inverse linear, 2 = inverse square, 3 = softer inverse square
 	int timescale = 1;
 	double scale = 0.25;
 	
@@ -131,16 +131,16 @@ int main (void){
 					timescale--;
         	}
         	else if (ev.keyboard.keycode == ALLEGRO_KEY_LEFT){
-        		setVect(pan, getVectVal(pan,0)+50, getVectVal(pan,1)) ;
+        		setVect(pan, getVectVal(pan,0)+50/scale, getVectVal(pan,1)) ;
         	}
         	else if (ev.keyboard.keycode == ALLEGRO_KEY_RIGHT){
-        		setVect(pan, getVectVal(pan,0)-50, getVectVal(pan,1)) ;
+        		setVect(pan, getVectVal(pan,0)-50/scale, getVectVal(pan,1)) ;
         	}
         	else if (ev.keyboard.keycode == ALLEGRO_KEY_UP){
-        		setVect(pan, getVectVal(pan,0), getVectVal(pan,1)+50) ;
+        		setVect(pan, getVectVal(pan,0), getVectVal(pan,1)+50/scale) ;
         	}
         	else if (ev.keyboard.keycode == ALLEGRO_KEY_DOWN){
-        		setVect(pan, getVectVal(pan,0), getVectVal(pan,1)-50) ;
+        		setVect(pan, getVectVal(pan,0), getVectVal(pan,1)-50/scale) ;
         	}
         	
 		}
@@ -150,11 +150,14 @@ int main (void){
       }
 		
 		if (redraw && al_is_event_queue_empty(event_queue)){
-			if (al_get_timer_count(timer) % 60 == 0)
+			if (al_get_timer_count(timer) % 60 == 0){
 				printVect(mouse);
+				//printVect(pan);
+			}
 			redraw = 0;
 			al_clear_to_color(al_map_rgb(0,0,0));
 			drawObjList(list, scale, pan);
+			al_draw_filled_circle(320,240,2,al_map_rgb(255,0,0));
 			al_flip_display();
 		}
 	}

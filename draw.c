@@ -27,15 +27,19 @@ void drawObj(Obj * object , double scale, Vect* pan){ //piirretään objekti, t�
 	//aluksi pitää määrittää sopivat arvot x:lle ja y:lle,
 	//eli: x ja y pitää olla sellaisia, että x etäisyys 
 	//ruudun keskikohdasta, samoin y. sitten voi skaalata
-	x = scaleVal(x,scale);
-	y = scaleVal(y,scale);
+	
+	
 	x = panVal(x,deltax);//tehty?
 	y = panVal(y,deltay);//tehty?
+	x = scaleVal(x,scale);
+	y = scaleVal(y,scale);
+	
+
 	
 	
 	
 	//}
-	al_draw_filled_circle(x,y,4,color);
+	al_draw_filled_circle(x+320,y+240,4,color);
 }
 void drawObjList(ObjList * list, double scale, Vect * pan){//piirretaan lista, tätä kutsutaan itse.
 	for (size_t i=0;i<list->size;i++)
