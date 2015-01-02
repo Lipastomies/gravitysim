@@ -163,12 +163,22 @@ int main (void){
 		else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES ||
               ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) {
          setVect( mouse,(double)ev.mouse.x,(double)ev.mouse.y);
-         
+         normalizeMouse(mouse_norm,mouse,pan,scale);
+		}
+		else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN){
+			Obj * temp = createObj((double)rand_lim(500));
+			Vect * temp1 = createVect();
+			setVect( temp1, getVectVal(mouse_norm,0)-320,getVectVal(mouse_norm,1)-240);
+			setObjAttr( temp, temp1,'p'); 
+			addObj(list,temp);
+			destroyVect(temp1);
+		}
+		else if(ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
+         gameover = 1;
       }
-		
 		if (redraw && al_is_event_queue_empty(event_queue)){
 			if (al_get_timer_count(timer) % 60 == 0){
-				normalizeMouse(mouse_norm,mouse,pan,scale);
+				
 				printVect(mouse_norm);
 				printf("top lel joku pan:");
 				printVect(pan);
