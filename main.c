@@ -17,6 +17,21 @@ int rand_lim(int limit) {
     } while (retval > limit );
     return retval ;
 }
+void normalizeMouse (Vect * retval, Vect * mouse, Vect * pan, double scale){
+	double x = getVectVal(mouse,0);
+	double y = getVectVal(mouse,1);
+	double deltax = getVectVal(pan,0);
+	double deltay = getVectVal(pan,1);
+	//deskaalaus
+	
+	x = panVal(x,-deltax);
+	y = panVal(y,-deltay);
+	x = scaleVal(x,1/scale);
+	y = scaleVal(y,1/scale);
+	//depanning
+	
+	setVect(retval,x,y);
+}
 
 Vect * randVect(int lim1, int lim2){
 	Vect * retval = createVect();
@@ -50,6 +65,7 @@ int main (void){
 	
 	//hiiren koordinaatit
 	Vect * mouse = createVect();
+	Vect * mouse_norm = createVect();
 	Vect * pan = createVect();
 	setVect( pan, 320,240);
 	
@@ -64,8 +80,8 @@ int main (void){
 	//itse simuloitavat kappaleet ja niiden luonti
 	
 	ObjList * list = createObjList();
-	for (int i = 0;i<40;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
-		Obj * temp = createObj((double)rand_lim(500));
+	for (int i = 0;i<10;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
+		Obj * temp = createObj((double)rand_lim(50000));
 		Vect * temp1 = randVect(2000,1500);
 		Vect * temp2 = randVect(100,100);
 		setObjAttr( temp, temp1, 'p');
@@ -85,7 +101,7 @@ int main (void){
 	int pause = 1;
 	int forcetoggle = 1; //1 =inverse linear, 2 = inverse square, 3 = softer inverse square
 	int timescale = 1;
-	double scale = 0.25;
+	double scale = 1;
 	
 	al_clear_to_color(al_map_rgb(0,0,0));
 	al_start_timer(timer);
@@ -147,12 +163,18 @@ int main (void){
 		else if(ev.type == ALLEGRO_EVENT_MOUSE_AXES ||
               ev.type == ALLEGRO_EVENT_MOUSE_ENTER_DISPLAY) {
          setVect( mouse,(double)ev.mouse.x,(double)ev.mouse.y);
+         
       }
 		
 		if (redraw && al_is_event_queue_empty(event_queue)){
 			if (al_get_timer_count(timer) % 60 == 0){
+				normalizeMouse(mouse_norm,mouse,pan,scale);
+				printVect(mouse_norm);
+				printf("top lel joku pan:");
+				printVect(pan);
+				printf("top lel joku mouse:");
 				printVect(mouse);
-				//printVect(pan);
+				printf("asdasd scale : %lf\n",scale);
 			}
 			redraw = 0;
 			al_clear_to_color(al_map_rgb(0,0,0));
@@ -167,6 +189,7 @@ int main (void){
 	al_destroy_event_queue(event_queue);
 	destroyObjList(list);
 	destroyVect(mouse);
+	destroyVect(mouse_norm);
 	destroyVect(pan);
 	return 0;
 }
