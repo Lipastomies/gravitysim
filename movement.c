@@ -33,12 +33,26 @@ double absForceLinear(Obj * A, Obj * B){ //palauttaa voiman skalaari-
 	return 0;
 }
 
+double absForceSquareSoft(Obj * A, Obj * B){//"pehmennetty" voima,
+	//ei lähesty ääretöntä pienillä etäisyyksillä
+	double dist = calcDist(getObjAttr(A, 'p'), getObjAttr(B, 'p'));
+	//printf("%lf\n", dist);
+	if (dist >=1)
+		return (getObjMass(A)*getObjMass(B))/(dist*dist);
+	else if (dist >0 && dist <1)
+		return (getObjMass(A)*getObjMass(B));
+	return 0;
+}
+
 Vect * calcAcc(Obj * A, Obj * B,int forcetoggle){//A on vaikutettava objekti, B on vaikuttava
 	Vect * Temp = createVect();
 	double absforce = 0;
 	if (forcetoggle == 1)
 		absforce = absForceLinear(A, B);
-	else absforce = absForceSquare(A,B);
+	else if (forcetoggle == 2) 
+		absforce = absForceSquare(A,B);
+	else if (forcetoggle == 3)
+		absforce = absForceSquareSoft(A,B);
 	double deltax = getVectVal(getObjAttr(B,'p'),0)-getVectVal(getObjAttr(A,'p'),0);
 	double deltay = getVectVal(getObjAttr(B,'p'),1)-getVectVal(getObjAttr(A,'p'),1);
 	double xforce = (deltax)/(calcDist(getObjAttr(B,'p'), getObjAttr(A,'p')))*absforce/getObjMass(A);

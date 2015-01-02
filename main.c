@@ -64,7 +64,7 @@ int main (void){
 	//itse simuloitavat kappaleet ja niiden luonti
 	
 	ObjList * list = createObjList();
-	for (int i = 0;i<45;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
+	for (int i = 0;i<150;i++){//HUOM:n. 200 kappaletta on maksimi, mitä jaksetaan pyörittää
 		Obj * temp = createObj((double)rand_lim(5000));
 		Vect * temp1 = randVect(2000,1500);
 		Vect * temp2 = randVect(100,100);
@@ -83,7 +83,7 @@ int main (void){
 	int gameover = 0;
 	int redraw = 0;
 	int pause = 1;
-	int forcetoggle = 1;
+	int forcetoggle = 0;
 	int timescale = 1;
 	double scale = 0.25;
 	
